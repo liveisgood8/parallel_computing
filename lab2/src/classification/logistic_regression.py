@@ -1,18 +1,16 @@
 import numpy as np
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from pyspark.sql import DataFrame
 from .uitls import convert_df_to_np_arr
 from ..config import TEST_SIZE
 
 
-class ForestClassifier:
+class LogisticClassifier:
     def __init__(self, df: DataFrame, labels_df: DataFrame):
-        # Создаём модель леса из сотни деревьев
-        self.model = RandomForestClassifier(n_estimators=100,
-                                            bootstrap=True,
-                                            max_features='sqrt')
+        # Создаём модель
+        self.model = LogisticRegression()
 
         data, labels_data = convert_df_to_np_arr(df, labels_df)
 

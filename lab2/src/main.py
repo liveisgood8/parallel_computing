@@ -1,20 +1,28 @@
-import numpy as np
 import src.data_preparer as data_preparer
 
 from src.classification.random_forest import ForestClassifier
+from src.classification.logistic_regression import LogisticClassifier
 
 
 def main():
-    data_frame = data_preparer.get_truncated_data_frame()
-    data_frame_my_region = data_preparer.get_truncated_data_frame_for_region()
+    full_data_frame = data_preparer.get_truncated_data_frame()
+
+    data_frame = full_data_frame.drop('CLASS').collect()
+    labels_data_frame = full_data_frame.select('CLASS').collect()
 
     forest_classifier = ForestClassifier(
-        train_df=data_frame.drop('CLASS').collect(),
-        train_labels_df=data_frame.select('CLASS').collect(),
+        df=data_frame,
+        labels_df=labels_data_frame,
     )
 
-    print(forest_classifier.predict(data_frame.drop('CLASS').collect()[0]))
-    print(forest_classifier.predict(data_frame_my_region.drop('CLASS').collect()[0]))
+    log_regression_classifier = LogisticClassifier(
+        df=data_frame,
+        labels_df=labels_data_frame,
+    )
+
+    print('Random forest classifier score:', forest_classifier.get_score())
+    print('Logistic regression classifier score:', log_regression_classifier.get_score())
 
 
-main()
+if __name__ == "__main__":
+    main()
