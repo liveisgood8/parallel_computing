@@ -9,7 +9,6 @@ from ..config import TEST_SIZE
 
 class LogisticClassifier:
     def __init__(self, df: DataFrame, labels_df: DataFrame):
-        # Создаём модель
         self.model = LogisticRegression()
 
         data, labels_data = convert_df_to_np_arr(df, labels_df)
@@ -25,9 +24,8 @@ class LogisticClassifier:
 
     def predict(self, test_df: DataFrame):
         test = np.array(test_df)
-        test = np.reshape(test, newshape=(1, -1))
+        # test = np.reshape(test, newshape=(1, -1)) # if test_df contains only one row
 
-        # Действующая классификация
         predictions = self.model.predict(test)
 
         return predictions

@@ -9,7 +9,7 @@ from ..config import TEST_SIZE
 
 class ForestClassifier:
     def __init__(self, df: DataFrame, labels_df: DataFrame):
-        # Создаём модель леса из сотни деревьев
+        # Create model from 100 trees
         self.model = RandomForestClassifier(n_estimators=100,
                                             bootstrap=True,
                                             max_features='sqrt')
@@ -27,9 +27,8 @@ class ForestClassifier:
 
     def predict(self, test_df: DataFrame):
         test = np.array(test_df)
-        test = np.reshape(test, newshape=(1, -1))
+        # test = np.reshape(test, newshape=(1, -1)) # if test_df contains only one row
 
-        # Действующая классификация
         predictions = self.model.predict(test)
 
         return predictions
