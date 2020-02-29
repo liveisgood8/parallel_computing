@@ -16,12 +16,14 @@ df.createOrReplaceTempView('data_table')
 
 
 def get_truncated_data_frame():
-    truncated_df = spark.sql('select Climate_Region_Pub, DOLELCOL, TOTALDOLCOL, BTUELCOL, TOTALDOLSPH, '
-                             'CELLAR from data_table')
+    truncated_df = spark.sql('select case when Climate_Region_Pub = {} then 1 else 0 end CLASS, '
+                             'TOTALDOLCOL, BTUELCOL, TOTALDOLSPH, HEATHOME, BTUNGSPH, DOLNGSPH CELLAR '
+                             'from data_table'.format(config.DATA_SET_REGION_PUB))
     return truncated_df
 
 
 def get_truncated_data_frame_for_region():
-    truncated_df = spark.sql('select Climate_Region_Pub, DOLELCOL, TOTALDOLCOL, BTUELCOL, TOTALDOLSPH, '
-                             'CELLAR from data_table where Climate_Region_Pub=' + str(config.DATA_SET_REGION_PUB))
+    truncated_df = spark.sql('select 1 as CLASS, '
+                             'TOTALDOLCOL, BTUELCOL, TOTALDOLSPH, HEATHOME, BTUNGSPH, DOLNGSPH CELLAR '
+                             'from data_table where Climate_Region_Pub=' + str(config.DATA_SET_REGION_PUB))
     return truncated_df
