@@ -1,1 +1,1 @@
-parallel_computing
+Programs for laboratory work on parallel computing
