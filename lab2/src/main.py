@@ -22,9 +22,11 @@ def main():
 
     print('-- task №4 --')
     df = spark.sql('select * from data_table')
+    print('original df count:', df.count())
     modified_df = df\
         .where(df.year_built != 0)\
         .where(df.year_built > 2000)
+    print('truncated df count:', df.count())
     modified_df.show()
 
 
