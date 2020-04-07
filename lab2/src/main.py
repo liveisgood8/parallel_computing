@@ -8,12 +8,12 @@ def main():
         'from data_table'
     )
     avg_sqft_difference.show()
-
+    
     print('-- task №2 --')
     avg_sqft_by_years = spark.sql('select year_built, avg(gross_sqft) '
                                   'from data_table group by year_built')
     avg_sqft_by_years.show()
-
+    
     print('-- task №3 --')
     avg_price_by_class_and_neighborhood = spark.sql(
         'select neighborhood, building_class_category, avg(sale_price) from data_table '
@@ -25,8 +25,8 @@ def main():
     print('original df count:', df.count())
     modified_df = df\
         .where(df.year_built != 0)\
-        .where(df.year_built > 2000)
-    print('truncated df count:', df.count())
+        .where(df.year_built < 2000)
+    print('truncated df count:', modified_df.count())
     modified_df.show()
 
 
