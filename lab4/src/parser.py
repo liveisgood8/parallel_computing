@@ -15,5 +15,4 @@ df = spark.read.csv(
     escape='"',
     maxColumns=16
 )
-df.createOrReplaceTempView('data_table')
 
